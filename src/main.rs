@@ -1,4 +1,7 @@
-use std::net::TcpListener;
+use std::{
+    io::{BufRead, BufReader},
+    net::{TcpListener, TcpStream}
+};
 
 fn main() {
     // Bind the TCP listener to the address and port
@@ -6,7 +9,19 @@ fn main() {
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
-        println!("Connection established from: {}", stream.peer_addr().unwrap());
-
+        //println!("Connection established from: {}", stream.peer_addr().unwrap());
+        handle_connection(stream);
     }
+}
+
+fn handle_connection(mut stream: TcpStream) {
+    let buf_reader = BufReader::new(&mut stream);
+    let http_request: Vec<_> = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
+
+        println!("HTTP Request: {:#?}", http_request);
+
 }

@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "hello"
+name = "web-server-simple"
 version = "0.1.0"
