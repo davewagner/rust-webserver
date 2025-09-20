@@ -18,7 +18,7 @@ impl Worker {
                 .unwrap();
             println!("Worker {id} got a job; executing.");
             job();
-        });
+        }); 
         Worker { id, thread }
     }
 }
